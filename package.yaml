@@ -1,0 +1,38 @@
+name:                aws-lambda-haskell-url-shortener
+version:             0.1.0
+github:              "fcracker79/aws-lambda-haskell-url-shortener"
+license:             MIT
+author:              "Mirko Bonasorte"
+maintainer:          "fcracker79@gmail.com"
+copyright:           "2020 Mirko Bonasorte"
+
+description:         Please see the README on GitHub at <https://github.com/fcracker79/aws-lambda-haskell-url-shortener#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- aws-lambda-haskell-runtime >= 3.0.0
+- aeson
+
+library:
+  source-dirs: src
+
+executables:
+  bootstrap:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -O2
+    - -static
+    - -with-rtsopts=-N
+    cc-options: -static
+    ld-options: -static -pthread
+    dependencies:
+    - aws-lambda-haskell-url-shortener
+
+default-extensions:
+  - RecordWildCards
+  - OverloadedLists
+  - OverloadedStrings
+  - DeriveGeneric

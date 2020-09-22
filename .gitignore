@@ -1,6 +1,7 @@
 dist
 dist-*
 cabal-dev
+*.swp
 *.o
 *.hi
 *.hie
@@ -21,3 +22,7 @@ cabal.project.local
 cabal.project.local~
 .HTF/
 .ghc.environment.*
+.stack-work/
+aws-lambda-haskell-url-shortener.cabal
+build/
+*~
