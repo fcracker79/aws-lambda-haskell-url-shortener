@@ -17,6 +17,25 @@ import           Network.AWS.Data
 import           Network.AWS.DynamoDB
 import           System.IO
 
+
+data DynamoDBEndpoint = DynamoDBEndpoint {
+    secure :: Bool,
+    host :: String,
+    port :: Int
+}
+
+data DynamoDBTable = DynamoDBTable {
+    tablename :: String,
+    keyField :: String,
+    valueField :: String
+}
+
+data DynamoDBConfiguration = DynamoDBConfiguration {
+    region :: String,
+    endpoint :: Maybe DynamoDBEndpoint,
+    table :: DynamoDBTable
+}
+
 insertItem region secure host port table item = do
     lgr <- newLogger Debug stdout
     env <- newEnv Discover <&> set envLogger lgr
