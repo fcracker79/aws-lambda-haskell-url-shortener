@@ -11,7 +11,25 @@ description:         Please see the README on GitHub at <https://github.com/fcra
 dependencies:
 - base >= 4.7 && < 5
 - aws-lambda-haskell-runtime >= 3.0.0
+- amazonka
+- amazonka-dynamodb
 - aeson
+- bytestring
+- lens
+- resourcet
+- text
+- unordered-containers
+- monad-control
+- base
+- conduit
+- conduit-extra
+- exceptions
+- lens
+- semigroups
+- text
+- time
+- transformers
+- unordered-containers
 
 library:
   source-dirs: src
@@ -36,3 +54,4 @@ default-extensions:
   - OverloadedLists
   - OverloadedStrings
   - DeriveGeneric
+  - FlexibleContexts
