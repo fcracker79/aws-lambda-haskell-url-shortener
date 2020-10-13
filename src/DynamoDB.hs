@@ -4,6 +4,8 @@ module DynamoDB where
 import           Control.Lens
 import           Control.Monad.IO.Class
 import           Control.Monad.Trans.AWS
+import           Control.Monad.Catch
+import           Control.Monad.IO.Unlift
 import           Data.ByteString         (ByteString)
 import           Data.Conduit
 import qualified Data.Conduit.List       as CL
@@ -20,7 +22,7 @@ import           System.IO
 
 data DynamoDBEndpoint = DynamoDBEndpoint {
     secure :: Bool,
-    host :: String,
+    host :: ByteString,
     port :: Int
 }
 
@@ -31,27 +33,38 @@ data DynamoDBTable = DynamoDBTable {
 }
 
 data DynamoDBConfiguration = DynamoDBConfiguration {
-    region :: String,
+    region :: Region,
     endpoint :: Maybe DynamoDBEndpoint,
     table :: DynamoDBTable
 }
 
-insertItem region secure host port table item = do
+type DynamoDBItem = HashMap Text AttributeValue
+
+
+_createService :: Maybe DynamoDBEndpoint -> Service
+_createService Nothing = dynamoDB
+_createService (Just endpoint) = setEndpoint (secure endpoint) (host endpoint) (port endpoint) dynamoDB
+
+insertItem
+  :: (MonadCatch m, MonadIO m, MonadUnliftIO m) =>
+      DynamoDBConfiguration -> DynamoDBItem -> m PutItemResponse
+insertItem conf item = do
     lgr <- newLogger Debug stdout
     env <- newEnv Discover <&> set envLogger lgr
 
     -- Specify a custom DynamoDB endpoint to communicate with:
-    let dynamo = setEndpoint secure host port dynamoDB
-
-    runResourceT . runAWST env . within region $ do
+    let dynamo = _createService (endpoint conf)
+    let tableName = read (conf & table & tablename)::Text
+    runResourceT . runAWST env . within (region conf) $ do
         -- Scoping the endpoint change using 'reconfigure':
         reconfigure dynamo $ do
             say $ "Inserting item into table '"
-               <> table
+               -- conf.table.tablename is a Text. Thanks god, Text is a Read instance too
+               <> tableName
                <> "' with attribute names: "
                <> Text.intercalate ", " (Map.keys item)
             -- Insert the new item into the specified table:
-            send $ putItem table & piItem .~ item
+            send $ putItem tableName & piItem .~ item
 
 
 say :: MonadIO m => Text -> m ()

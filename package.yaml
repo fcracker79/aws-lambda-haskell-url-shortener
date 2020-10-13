@@ -30,6 +30,8 @@ dependencies:
 - time
 - transformers
 - unordered-containers
+- unliftio-core
+
 
 library:
   source-dirs: src
