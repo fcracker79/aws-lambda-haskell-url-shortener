@@ -1,0 +1,20 @@
+{
+    "AttributeDefinitions": [
+    {
+        "AttributeName": "id", 
+        "AttributeType": "S"
+    }
+    ], 
+        "ProvisionedThroughput": {
+            "WriteCapacityUnits": 5, 
+            "ReadCapacityUnits": 5
+        }, 
+        "TableName": "Urls", 
+        "KeySchema": [
+        {
+            "KeyType": "HASH", 
+            "AttributeName": "id"
+        }
+    ]
+}
+
