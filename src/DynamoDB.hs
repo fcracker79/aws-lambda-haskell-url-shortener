@@ -67,5 +67,20 @@ insertItem conf item = do
             send $ putItem tableName & piItem .~ item
 
 
+fetchItem
+  :: (MonadCatch m, MonadIO m, MonadUnliftIO m) =>
+      DynamoDBConfiguration -> DynamoDBItem -> m GetItemResponse
+fetchItem conf key = do
+    lgr <- newLogger Debug stdout
+    env <- newEnv Discover <&> set envLogger lgr
+
+    -- Specify a custom DynamoDB endpoint to communicate with:
+    let dynamo = _createService (endpoint conf)
+    let tableName = read (conf & table & tablename)::Text
+    runResourceT . runAWST env . within (region conf) $ do
+        -- Scoping the endpoint change using 'reconfigure':
+        reconfigure dynamo $ do
+            send $ getItem tableName & giKey .~ key
+
 say :: MonadIO m => Text -> m ()
 say = liftIO . Text.putStrLn
