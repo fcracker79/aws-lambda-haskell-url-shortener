@@ -26,3 +26,4 @@ cabal.project.local~
 aws-lambda-haskell-url-shortener.cabal
 build/
 *~
+.idea
