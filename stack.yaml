@@ -54,6 +54,7 @@ extra-deps:
  - aws-lambda-haskell-runtime-3.0.0
  - amazonka-1.6.1
  - amazonka-dynamodb-1.6.1
+ - random-strings-0.1.1.0
 # Override default flag values for local packages and extra-deps
 # flags: {}
 

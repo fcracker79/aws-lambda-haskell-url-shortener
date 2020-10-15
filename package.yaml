@@ -25,6 +25,7 @@ dependencies:
 - conduit-extra
 - exceptions
 - lens
+- random-strings
 - semigroups
 - text
 - time

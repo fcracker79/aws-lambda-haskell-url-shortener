@@ -25,6 +25,13 @@ packages:
       sha256: bd7469b4077272ecf37fe30dcff64c3af0a820b610ca592c172d7fa97d9e6833
   original:
     hackage: amazonka-dynamodb-1.6.1
+- completed:
+    hackage: random-strings-0.1.1.0@sha256:935a7a23dab45411960df77636a29b44ce42b89eeb15f2b1e809d771491fa677,2517
+    pantry-tree:
+      size: 663
+      sha256: 5a382966fdd8d5220b5791f3bff6db00d2ea29235e2716dadd52461b8a8beb97
+  original:
+    hackage: random-strings-0.1.1.0
 snapshots:
 - completed:
     size: 496120
