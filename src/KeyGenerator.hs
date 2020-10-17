@@ -9,11 +9,9 @@ _urlPathChars = onlyAlphaNum randomASCII
 _numberOfAttempts :: Int -> Int
 _numberOfAttempts len = 10 ^ len
 
-_generateKeysByLen :: Int -> [IO String]
-_generateKeysByLen len = replicate (_numberOfAttempts len) $ monadicFirst $ randomStringsLen (randomString _urlPathChars) (len, len) 1
+_generateKeysByLen :: Int -> IO [String]
+_generateKeysByLen len = randomStringsLen (randomString _urlPathChars) (len, len) (_numberOfAttempts len)
 
-_recGenerateKeys :: Int -> [IO String]
-_recGenerateKeys i = (_generateKeysByLen i) ++ (_recGenerateKeys (i + 1))
-
-generateKeys :: [IO String]
+_recGenerateKeys :: Int -> IO [String]
+_recGenerateKeys i = pure (++) <*> (_generateKeysByLen i) <*> (_generateKeysByLen (i + 1))
 generateKeys = _recGenerateKeys _minLength

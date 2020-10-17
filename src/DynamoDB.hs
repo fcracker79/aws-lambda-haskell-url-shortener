@@ -28,8 +28,8 @@ data DynamoDBEndpoint = DynamoDBEndpoint {
 
 data DynamoDBTable = DynamoDBTable {
     tablename :: String,
-    keyField :: String,
-    valueField :: String
+    keyField :: Text,
+    valueField :: Text
 }
 
 data DynamoDBConfiguration = DynamoDBConfiguration {
