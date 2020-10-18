@@ -60,7 +60,7 @@ insertItem conf item = do
 
     -- Specify a custom DynamoDB endpoint to communicate with:
     let dynamo = _createService (endpoint conf)
-    let tableName = read (conf & table & tablename)::Text
+    let tableName = Text.pack (conf & table & tablename)
     runResourceT . runAWST env . within (region conf) $ do
         -- Scoping the endpoint change using 'reconfigure':
         reconfigure dynamo $ do
@@ -82,7 +82,7 @@ fetchItem conf key = do
 
     -- Specify a custom DynamoDB endpoint to communicate with:
     let dynamo = _createService (endpoint conf)
-    let tableName = read (conf & table & tablename)::Text
+    let tableName = Text.pack (conf & table & tablename)
     runResourceT . runAWST env . within (region conf) $ do
         -- Scoping the endpoint change using 'reconfigure':
         reconfigure dynamo $ do
