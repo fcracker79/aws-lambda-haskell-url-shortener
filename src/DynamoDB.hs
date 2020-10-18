@@ -1,4 +1,10 @@
-module DynamoDB where
+module DynamoDB
+    ( insertItem
+    , fetchItem
+    , DynamoDBEndpoint (..)
+    , DynamoDBTable (..)
+    , DynamoDBConfiguration (..)
+    , DynamoDBItem (..)) where
 
 
 import           Control.Lens

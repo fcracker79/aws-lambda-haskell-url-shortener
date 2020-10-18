@@ -1,4 +1,4 @@
-module URLGenerator where
+module URLGenerator (allocateURL) where
 
 import KeyGenerator
 import DynamoDB

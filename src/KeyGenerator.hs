@@ -1,4 +1,4 @@
-module KeyGenerator where
+module KeyGenerator (generateKeys) where
 
 import Utils
 import Test.RandomStrings

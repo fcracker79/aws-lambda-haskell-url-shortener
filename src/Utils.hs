@@ -1,4 +1,6 @@
-module Utils where
+module Utils
+    (monadicFirst
+    ) where
 import Control.Monad
 
 monadicFirst :: Monad m => m [a] -> m a
