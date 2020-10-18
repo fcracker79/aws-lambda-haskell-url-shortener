@@ -8,6 +8,8 @@ copyright:           "2020 Mirko Bonasorte"
 
 description:         Please see the README on GitHub at <https://github.com/fcracker79/aws-lambda-haskell-url-shortener#readme>
 
+build-tools:
+- hspec-discover
 dependencies:
 - base >= 4.7 && < 5
 - aws-lambda-haskell-runtime >= 3.0.0
@@ -58,3 +60,18 @@ default-extensions:
   - OverloadedStrings
   - DeriveGeneric
   - FlexibleContexts
+
+tests:
+  test-aws-lambda-haskell-url-shortener:
+    main: Spec.hs
+    source-dirs: test/unit
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - HUnit
+      - aws-lambda-haskell-url-shortener
+      - test-framework
+      - test-framework-hunit
+      - hspec

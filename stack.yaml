@@ -55,6 +55,9 @@ extra-deps:
  - amazonka-1.6.1
  - amazonka-dynamodb-1.6.1
  - random-strings-0.1.1.0
+ - HUnit-1.6.0.0
+ - test-framework-0.8.2.0
+ - test-framework-hunit-0.3.0.2
 # Override default flag values for local packages and extra-deps
 # flags: {}
 
