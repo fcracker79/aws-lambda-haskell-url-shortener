@@ -10,6 +10,7 @@ import Control.Monad.IO.Class
 import Control.Monad.Trans.AWS
 import Control.Monad.Catch
 import Control.Monad.IO.Unlift
+import Data.Text.Internal
 
 _filterUrls :: (MonadCatch m, MonadIO m, MonadUnliftIO m) => DynamoDBConfiguration -> String -> m Bool
 _filterUrls conf url = do
@@ -25,3 +26,12 @@ _findFreeURL conf = do
     keys <- generateKeys
     filteredResult <- filterM (_filterUrls conf) keys
     return $ filteredResult!!0
+
+
+allocateURL :: DynamoDBConfiguration -> String -> IO String
+allocateURL conf url = do
+    key <- _findFreeURL conf
+    let itemKey = ((conf & table & keyField), read key::AttributeValue)
+    let itemValue = ((conf & table & valueField), read url::AttributeValue)
+    response <- insertItem conf (fromList[itemKey, itemValue])
+    return key
