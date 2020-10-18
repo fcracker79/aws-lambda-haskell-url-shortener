@@ -62,7 +62,7 @@ default-extensions:
   - FlexibleContexts
 
 tests:
-  test-aws-lambda-haskell-url-shortener:
+  unit-test-aws-lambda-haskell-url-shortener:
     main: Spec.hs
     source-dirs: test/unit
     ghc-options:
@@ -75,3 +75,17 @@ tests:
       - test-framework
       - test-framework-hunit
       - hspec
+  integration-test-aws-lambda-haskell-url-shortener:
+    main: Spec.hs
+    source-dirs: test/integration
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - HUnit
+      - aws-lambda-haskell-url-shortener
+      - test-framework
+      - test-framework-hunit
+      - hspec
+      - amazonka-core
