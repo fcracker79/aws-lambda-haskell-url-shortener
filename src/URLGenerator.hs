@@ -15,9 +15,16 @@ import Control.Monad.IO.Unlift
 import Data.Text.Internal
 import Data.Text
 
+
+_s2av :: String -> AttributeValue
+_s2av s = _t2av $ pack s
+
+_t2av :: Text -> AttributeValue
+_t2av t = attributeValue & avS .~ Just t
+
 _filterUrls :: (MonadCatch m, MonadIO m, MonadUnliftIO m) => DynamoDBConfiguration -> String -> m Bool
 _filterUrls conf url = do
-    let item = fromList[((conf & table & keyField), read url::AttributeValue)]
+    let item = fromList[((conf & table & keyField), _s2av url)]
     row <- fetchItem conf item
     let getItemRow = row ^. girsItem
     let result = Data.HashMap.Strict.null getItemRow
@@ -34,15 +41,15 @@ _findFreeURL conf = do
 allocateURL :: DynamoDBConfiguration -> String -> IO String
 allocateURL conf url = do
     key <- _findFreeURL conf
-    let itemKey = ((conf & table & keyField), read key::AttributeValue)
-    let itemValue = ((conf & table & valueField), read url::AttributeValue)
+    let itemKey = ((conf & table & keyField), (_s2av key))
+    let itemValue = ((conf & table & valueField), (_s2av url))
     response <- insertItem conf (fromList[itemKey, itemValue])
     return key
 
 
 getURL :: DynamoDBConfiguration -> String -> IO (Maybe String)
 getURL conf key = do
-    let item = fromList[((conf & table & keyField), read key::AttributeValue)]
+    let item = fromList[((conf & table & keyField), (_s2av key))]
     row <- fetchItem conf item
     let rowItem = row ^. girsItem
     let field = conf & table & valueField
