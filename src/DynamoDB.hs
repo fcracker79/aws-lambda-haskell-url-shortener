@@ -24,7 +24,7 @@ import qualified Data.Text.IO            as Text
 import           Network.AWS.Data
 import           Network.AWS.DynamoDB
 import           System.IO
-
+import           Debug.Trace
 
 data DynamoDBEndpoint = DynamoDBEndpoint {
     secure :: Bool,
@@ -61,6 +61,9 @@ insertItem conf item = do
     -- Specify a custom DynamoDB endpoint to communicate with:
     let dynamo = _createService (endpoint conf)
     let tableName = Text.pack (conf & table & tablename)
+    say $ Text.pack "********** insertItem **********"
+    say $ tableName
+    say $ Text.pack $ show (region conf)
     runResourceT . runAWST env . within (region conf) $ do
         -- Scoping the endpoint change using 'reconfigure':
         reconfigure dynamo $ do
@@ -83,6 +86,9 @@ fetchItem conf key = do
     -- Specify a custom DynamoDB endpoint to communicate with:
     let dynamo = _createService (endpoint conf)
     let tableName = Text.pack (conf & table & tablename)
+    say $ Text.pack "+++++++++++ fetchItem +++++++++++++"
+    say $ tableName
+    say $ Text.pack $ show (region conf)
     runResourceT . runAWST env . within (region conf) $ do
         -- Scoping the endpoint change using 'reconfigure':
         reconfigure dynamo $ do

@@ -21,8 +21,8 @@ spec = do
               port=8000
           },
           table=DynamoDBTable {
-              tablename="urls",
-              keyField=Data.Text.pack "key",
+              tablename="Urls",
+              keyField=Data.Text.pack "id",
               valueField=Data.Text.pack "url"
           }
       }

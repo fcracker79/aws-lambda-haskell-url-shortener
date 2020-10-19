@@ -14,6 +14,9 @@ import Control.Monad.Catch
 import Control.Monad.IO.Unlift
 import Data.Text.Internal
 import Data.Text
+import Debug.Trace
+import Control.Monad.Loops (firstM)
+import System.IO.Error
 
 
 _s2av :: String -> AttributeValue
@@ -34,8 +37,10 @@ _filterUrls conf url = do
 _findFreeURL :: DynamoDBConfiguration -> IO String
 _findFreeURL conf = do
     keys <- generateKeys
-    filteredResult <- filterM (_filterUrls conf) keys
-    return $ filteredResult!!0
+    filteredResult <- firstM (_filterUrls conf) keys
+    case filteredResult of
+                 Nothing -> ioError (userError "No such Free Url")
+                 Just x -> return x
 
 
 allocateURL :: DynamoDBConfiguration -> String -> IO String
