@@ -1,5 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE DeriveAnyClass #-}
 
 module Main where
 
@@ -12,4 +13,4 @@ import qualified Lib
 initializeContext :: IO ()
 initializeContext = return ()
 
-generateLambdaDispatcher StandaloneLambda defaultDispatcherOptions
+generateLambdaDispatcher UseWithAPIGateway defaultDispatcherOptions
