@@ -60,6 +60,13 @@ packages:
       sha256: 355897b03e0320296f207350f8c8aba4071b673021aef726bac27e3ad0bbb2cc
   original:
     hackage: test-framework-hunit-0.3.0.2
+- completed:
+    hackage: http-types-0.12.3@sha256:f35229edb1bc7b3ae27f961b2407dadb5bfa69d43a8f5337ab46cdc79ca4afe9,2035
+    pantry-tree:
+      size: 833
+      sha256: c9b77e1ba204fffbe4e1be80412bc48e47440a07e4b7db4cdc77d573a3e21b9a
+  original:
+    hackage: http-types-0.12.3
 snapshots:
 - completed:
     size: 496120

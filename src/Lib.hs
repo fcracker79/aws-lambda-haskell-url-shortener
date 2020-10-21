@@ -4,6 +4,8 @@ import GHC.Generics
 import Data.Aeson
 import DynamoDB
 import Aws.Lambda
+import Network.HTTP.Types.Header
+import Data.ByteString.Char8
 
 data Person = Person
   { personName :: String
@@ -23,11 +25,13 @@ instance ToJSON Person
 
 handler :: (ApiGatewayRequest String) -> Context () -> IO (Either (ApiGatewayResponse String) (ApiGatewayResponse String))
 handler request context = do
-    let url = resource request
-    let payload = reqBody request
+    let url = apiGatewayRequestResource request
+    let payload = apiGatewayRequestBody request
     return $ Right $ ApiGatewayResponse {
         apiGatewayResponseStatusCode = 200,
         apiGatewayResponseBody = "TODO",
         apiGatewayResponseIsBase64Encoded = False,
-        apiGatewayResponseHeaders =
+        apiGatewayResponseHeaders = [
+            (hContentType, Data.ByteString.Char8.pack "application/json")
+        ]
     }
