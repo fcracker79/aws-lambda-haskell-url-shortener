@@ -5,12 +5,16 @@
 
 packages:
 - completed:
-    hackage: aws-lambda-haskell-runtime-3.0.0@sha256:1de27f1a3bdb85da3ebbc8a4f424c70fc72015c25cd22b13b79f4fa8dace30ff,3015
+    name: aws-lambda-haskell-runtime
+    version: 3.0.4
+    git: https://github.com/fcracker79/aws-lambda-haskell-runtime.git
     pantry-tree:
-      size: 1560
-      sha256: ce4852719b9a5e22d4d050b2e55a3e8b93a411e1ecf97d3a87ee46c705262f00
+      size: 3485
+      sha256: d5a6b2b50885e8d12bda5f95ef3734a8c465d3d3968b40e27007d3ec8f38a071
+    commit: ba496c5b785973a60ead5743b0ad51b97e08a1e1
   original:
-    hackage: aws-lambda-haskell-runtime-3.0.0
+    git: https://github.com/fcracker79/aws-lambda-haskell-runtime.git
+    commit: ba496c5b785973a60ead5743b0ad51b97e08a1e1
 - completed:
     hackage: amazonka-1.6.1@sha256:f58b63e83876f93aa03c54e54b3eb8ba9358af93819d41f4a5a8f8b7d8b8399c,3544
     pantry-tree:
