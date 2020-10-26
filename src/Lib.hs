@@ -1,4 +1,4 @@
-module Lib where
+module Lib (module AWSFunctions, handler) where
 
 import GHC.Generics
 import Data.Aeson
@@ -6,6 +6,7 @@ import DynamoDB
 import Aws.Lambda
 import Network.HTTP.Types.Header
 import Data.ByteString.Char8
+import AWSFunctions
 
 data Person = Person
   { personName :: String
