@@ -51,8 +51,7 @@ packages:
 #
 # extra-deps: []
 extra-deps:
- - git: https://github.com/fcracker79/aws-lambda-haskell-runtime.git
-   commit: ba496c5b785973a60ead5743b0ad51b97e08a1e1
+ - aws-lambda-haskell-runtime-3.0.5
  - amazonka-1.6.1
  - amazonka-dynamodb-1.6.1
  - monad-loops-0.4.3
