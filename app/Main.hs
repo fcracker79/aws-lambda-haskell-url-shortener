@@ -16,51 +16,59 @@ import GHC.Exception.Type (SomeException)
 initializeContext :: IO ()
 initializeContext = return ()
 
--- generateLambdaDispatcher UseWithAPIGateway defaultDispatcherOptions
-main = (runLambda initializeContext) run
-run
+
+_run
  LambdaOptions {functionHandler = functionHandler,
                 contextObject = contextObject, eventObject = eventObject,
-                executionUuid = executionUuid}
- = case functionHandler of
-     "src/Lib.handler"
-       -> do let returnErr_aIUv statusCode_aIUw
+                executionUuid = executionUuid} fh = do
+    let returnErr_aIUv statusCode_aIUw
                    = (pure
                         . (Left
                              . (ApiGatewayLambdaError
                                   . mkApiGatewayResponse statusCode_aIUw)))
-             case decodeObj eventObject of
-               Right eventObject_aIUx
-                 -> do resultE_aIUy <- (try
-                                          $ (Lib.handler eventObject_aIUx) contextObject)
-                       case resultE_aIUy of
-                         Right result_aIUz
-                           -> ((either
-                                  (pure
-                                     . (Left
-                                          . (ApiGatewayLambdaError
-                                               . fmap toApiGatewayResponseBody))))
-                                 (pure
-                                    . (Right
-                                         . (ApiGatewayResult
-                                              . fmap toApiGatewayResponseBody))))
-                                result_aIUz
-                         Left (handlerError_aIUA :: SomeException)
-                           -> if ((propagateImpureExceptions . apiGatewayDispatcherOptions)
-                                    $ DispatcherOptions
-                                        (ApiGatewayDispatcherOptions True)) then
-                                  ((returnErr_aIUv 500 . (toApiGatewayResponseBody . show))
-                                     $ handlerError_aIUA)
-                              else
-                                  ((returnErr_aIUv 500
-                                      . (toApiGatewayResponseBody . pack))
-                                     $ "Something went wrong.")
-               Left err_aIUB
-                 -> ((returnErr_aIUv 400 . (toApiGatewayResponseBody . show))
-                       $ err_aIUB)
-     _ -> ((pure
-              . (Left
-                   . (ApiGatewayLambdaError
-                        . (mkApiGatewayResponse 500 . toApiGatewayResponseBody))))
-             $ ("Handler "
-                  <> (functionHandler <> " does not exist on project")))
+    case decodeObj eventObject of
+       Right eventObject_aIUx
+         -> do resultE_aIUy <- (try
+                                  $ (fh eventObject_aIUx) contextObject)
+               case resultE_aIUy of
+                 Right result_aIUz
+                   -> ((either
+                          (pure
+                             . (Left
+                                  . (ApiGatewayLambdaError
+                                       . fmap toApiGatewayResponseBody))))
+                         (pure
+                            . (Right
+                                 . (ApiGatewayResult
+                                      . fmap toApiGatewayResponseBody))))
+                        result_aIUz
+                 Left (handlerError_aIUA :: SomeException)
+                   -> if ((propagateImpureExceptions . apiGatewayDispatcherOptions)
+                            $ DispatcherOptions
+                                (ApiGatewayDispatcherOptions True)) then
+                          ((returnErr_aIUv 500 . (toApiGatewayResponseBody . show))
+                             $ handlerError_aIUA)
+                      else
+                          ((returnErr_aIUv 500
+                              . (toApiGatewayResponseBody . pack))
+                             $ "Something went wrong.")
+       Left err_aIUB
+         -> ((returnErr_aIUv 400 . (toApiGatewayResponseBody . show))
+               $ err_aIUB)
+
+
+-- generateLambdaDispatcher UseWithAPIGateway defaultDispatcherOptions
+main = (runLambda initializeContext) run
+run LambdaOptions {functionHandler = functionHandler,
+                contextObject = contextObject, eventObject = eventObject,
+                executionUuid = executionUuid}
+    = case functionHandler of
+        "test" -> _run LambdaOptions {functionHandler = functionHandler,
+                                                  contextObject = contextObject, eventObject = eventObject,
+                                                  executionUuid = executionUuid} Lib.handler
+        _ -> ((pure
+                 . (Left
+                      . (ApiGatewayLambdaError
+                           . (mkApiGatewayResponse 500 . toApiGatewayResponseBody))))
+                $ ("Handler "
+                     <> (functionHandler <> " does not exist on project")))
