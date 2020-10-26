@@ -17,6 +17,7 @@ _getConf = do
     region <- Sysenv.getEnv "AWS_REGION"
     return (DynamoDBConfiguration {
         region=read region::Region,
+        endpoint=Nothing,
         table=DynamoDBTable {
             tablename="Urls",
             keyField=Data.Text.pack "id",
