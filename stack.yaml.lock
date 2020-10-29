@@ -67,6 +67,27 @@ packages:
       sha256: c9b77e1ba204fffbe4e1be80412bc48e47440a07e4b7db4cdc77d573a3e21b9a
   original:
     hackage: http-types-0.12.3
+- completed:
+    hackage: wreq-0.5.3.2@sha256:eb1d848e983a1d1b8960c28840b55e56d8b3d760e9d014b5d9d018b13439e63f,5570
+    pantry-tree:
+      size: 2423
+      sha256: 30d7ad14313cbb3b2efa18665c50853b71941253ce6d182e30a1c11e35c01141
+  original:
+    hackage: wreq-0.5.3.2
+- completed:
+    hackage: HsOpenSSL-0.11.4.20@sha256:b88bd010ef07db2f7109b53bee08476c00c9d5b9d01005f0b44477f7eb3ec74d,6091
+    pantry-tree:
+      size: 3287
+      sha256: 9b403d61ef40e8362e8968db16fb46d597bfac6d7ee7c139ff975af06027b6bd
+  original:
+    hackage: HsOpenSSL-0.11.4.20
+- completed:
+    hackage: http-client-openssl-0.3.1.0@sha256:423d74b93d5b2a79991340da8d2cd8fccd496fb470483bad8c73857200509e4e,1494
+    pantry-tree:
+      size: 387
+      sha256: 04e5fcd7727bfbe7bd53657d9af48abf39869fc609ba4ed9effd2b6d428aca94
+  original:
+    hackage: http-client-openssl-0.3.1.0
 snapshots:
 - completed:
     size: 496120

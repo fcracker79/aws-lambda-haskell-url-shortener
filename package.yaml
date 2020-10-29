@@ -36,6 +36,9 @@ dependencies:
 - unliftio-core
 - monad-loops
 - http-types
+- wreq
+- HsOpenSSL
+- http-client-openssl
 
 library:
   source-dirs: src

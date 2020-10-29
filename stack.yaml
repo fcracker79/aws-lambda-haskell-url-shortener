@@ -60,6 +60,9 @@ extra-deps:
  - test-framework-0.8.2.0
  - test-framework-hunit-0.3.0.2
  - http-types-0.12.3
+ - wreq-0.5.3.2
+ - HsOpenSSL-0.11.4.20
+ - http-client-openssl-0.3.1.0
 # Override default flag values for local packages and extra-deps
 # flags: {}
 
