@@ -63,6 +63,8 @@ extra-deps:
  - wreq-0.5.3.2
  - HsOpenSSL-0.11.4.20
  - http-client-openssl-0.3.1.0
+ - req-3.7.0
+ - http-client-0.6.4.1
 # Override default flag values for local packages and extra-deps
 # flags: {}
 

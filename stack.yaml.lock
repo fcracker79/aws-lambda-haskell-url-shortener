@@ -88,6 +88,20 @@ packages:
       sha256: 04e5fcd7727bfbe7bd53657d9af48abf39869fc609ba4ed9effd2b6d428aca94
   original:
     hackage: http-client-openssl-0.3.1.0
+- completed:
+    hackage: req-3.7.0@sha256:b966ca9522a31645c1725e0e539375499e2969bf8ce24316860e23df9f9351aa,3711
+    pantry-tree:
+      size: 712
+      sha256: 03902148991532fb90074630774a21ab481391204cc75c4a94713f07eb3d3f7c
+  original:
+    hackage: req-3.7.0
+- completed:
+    hackage: http-client-0.6.4.1@sha256:ea569e3ebc00e7bb68162fbdf85aa63e653b974eaff63df7b972e4296687e25c,5322
+    pantry-tree:
+      size: 2458
+      sha256: 8e6ebf17ad06cca8bdab0c2ceda13ed41dea0d793f1930f90f0542f9c66afff1
+  original:
+    hackage: http-client-0.6.4.1
 snapshots:
 - completed:
     size: 496120
