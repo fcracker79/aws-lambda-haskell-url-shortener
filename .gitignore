@@ -27,3 +27,4 @@ aws-lambda-haskell-url-shortener.cabal
 build/
 *~
 .idea
+dynamodb/dynamodb_data
