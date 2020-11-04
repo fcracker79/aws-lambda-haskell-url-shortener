@@ -102,6 +102,13 @@ packages:
       sha256: 8e6ebf17ad06cca8bdab0c2ceda13ed41dea0d793f1930f90f0542f9c66afff1
   original:
     hackage: http-client-0.6.4.1
+- completed:
+    hackage: http-api-data-0.4.2@sha256:63c8c2bb00929db203b2c2829029e7b4701a939e509cde9b0ba77f5d1b811bc6,3747
+    pantry-tree:
+      size: 887
+      sha256: 099401ed4cb3edc0da839bdc5dc508b4ad09895e9fcca01ed636c65bc3beabc7
+  original:
+    hackage: http-api-data-0.4.2
 snapshots:
 - completed:
     size: 496120

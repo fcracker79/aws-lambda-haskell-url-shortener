@@ -69,6 +69,9 @@ run LambdaOptions {functionHandler = functionHandler,
         "redirect" -> _run LambdaOptions {functionHandler = functionHandler,
                                                   contextObject = contextObject, eventObject = eventObject,
                                                   executionUuid = executionUuid} Lib.redirectUrl
+        "create" -> _run LambdaOptions  {functionHandler = functionHandler,
+                                                  contextObject = contextObject, eventObject = eventObject,
+                                                  executionUuid = executionUuid} Lib.createUrl
         _ -> ((pure
                  . (Left
                       . (ApiGatewayLambdaError

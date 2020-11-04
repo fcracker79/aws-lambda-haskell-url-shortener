@@ -65,6 +65,7 @@ extra-deps:
  - http-client-openssl-0.3.1.0
  - req-3.7.0
  - http-client-0.6.4.1
+ - http-api-data-0.4.2
 # Override default flag values for local packages and extra-deps
 # flags: {}
 

@@ -38,6 +38,7 @@ dependencies:
 - http-types
 - req
 - http-client
+- http-api-data
 
 library:
   source-dirs: src
