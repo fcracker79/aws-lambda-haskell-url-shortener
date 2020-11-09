@@ -28,3 +28,4 @@ build/
 *~
 .idea
 aws_local/dynamodb/dynamodb_data
+deploy.sh

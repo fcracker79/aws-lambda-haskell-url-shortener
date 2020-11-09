@@ -15,22 +15,26 @@ import Network.AWS
 import Network.AWS.Data
 import Web.FormUrlEncoded
 import Recaptcha
+import Control.Monad.IO.Class
 import qualified Data.Text as Text
+import System.IO.Error
 
 
 _getConf :: IO DynamoDBConfiguration
 _getConf = do
-    region <- Sysenv.getEnv "AWS_REGION"
-    return (DynamoDBConfiguration {
-        region=read region::Region,
-        endpoint=Nothing,
-        table=DynamoDBTable {
-            tablename="Urls",
-            keyField=Data.Text.pack "id",
-            valueField=Data.Text.pack "url"
-        }
-        })
-
+    regionString <- Sysenv.getEnv "AWS_REGION"
+    print $ "Region " ++ regionString
+    case (fromText (Text.pack regionString)::(Either String Region)) of
+        Right region -> return (DynamoDBConfiguration {
+                region=region,
+                endpoint=Nothing,
+                table=DynamoDBTable {
+                    tablename="Urls",
+                    keyField=Data.Text.pack "id",
+                    valueField=Data.Text.pack "url"
+                }
+                })
+        Left _ -> ioError (userError $ "Invalid region" ++ regionString)
 
 -- TODO migrate to SSM or secrets-manager (beware, currently not available in all regions)
 _getRecaptchaKey :: IO String
@@ -39,6 +43,8 @@ _getRecaptchaKey = Sysenv.getEnv "RECAPTCHA_KEY"
 
 redirectUrl :: (ApiGatewayRequest String) -> Context () -> IO (Either (ApiGatewayResponse String) (ApiGatewayResponse String))
 redirectUrl request context = do
+    (liftIO . print) "Executing URL redirection"
+    (liftIO . print) request
     conf <- _getConf
     let shortenerId = Prelude.head $ Prelude.filter
             (\x -> Data.Text.length x > 0)
@@ -65,6 +71,8 @@ redirectUrl request context = do
 
 createUrl :: (ApiGatewayRequest String) -> Context () -> IO (Either (ApiGatewayResponse String) (ApiGatewayResponse String))
 createUrl request context = do
+    (liftIO . print) "Executing URL creation"
+    (liftIO . print) request
     conf <- _getConf
     let maybeBody = apiGatewayRequestBody request
     case maybeBody of
