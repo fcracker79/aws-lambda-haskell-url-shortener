@@ -23,13 +23,14 @@ import System.IO.Error
 _getConf :: IO DynamoDBConfiguration
 _getConf = do
     regionString <- Sysenv.getEnv "AWS_REGION"
+    tableName <- Sysenv.getEnv "URLS_TABLE_NAME"
     print $ "Region " ++ regionString
     case (fromText (Text.pack regionString)::(Either String Region)) of
         Right region -> return (DynamoDBConfiguration {
                 region=region,
                 endpoint=Nothing,
                 table=DynamoDBTable {
-                    tablename="Urls",
+                    tablename=tableName,
                     keyField=Data.Text.pack "id",
                     valueField=Data.Text.pack "url"
                 }

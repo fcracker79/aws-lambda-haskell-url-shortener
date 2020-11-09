@@ -30,19 +30,19 @@ data DynamoDBEndpoint = DynamoDBEndpoint {
     secure :: Bool,
     host :: ByteString,
     port :: Int
-}
+} deriving(Show)
 
 data DynamoDBTable = DynamoDBTable {
     tablename :: String,
     keyField :: Text,
     valueField :: Text
-}
+} deriving(Show)
 
 data DynamoDBConfiguration = DynamoDBConfiguration {
     region :: Region,
     endpoint :: Maybe DynamoDBEndpoint,
     table :: DynamoDBTable
-}
+} deriving(Show)
 
 type DynamoDBItem = HashMap Text AttributeValue
 

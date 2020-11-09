@@ -54,6 +54,9 @@ allocateURL conf url = do
 
 getURL :: DynamoDBConfiguration -> String -> IO (Maybe String)
 getURL conf key = do
+    print $ "getURL for " ++ key
+    print $ "Using configuration"
+    print conf
     let item = fromList[((conf & table & keyField), (_s2av key))]
     row <- fetchItem conf item
     let rowItem = row ^. girsItem
