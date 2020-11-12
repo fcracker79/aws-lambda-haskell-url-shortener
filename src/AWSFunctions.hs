@@ -2,6 +2,7 @@ module AWSFunctions (redirectUrl, createUrl) where
 
 {-# LANGUAGE OverloadedStrings #-}
 
+import Data.List
 import GHC.Generics
 import Aws.Lambda
 import Network.HTTP.Types.Header
@@ -107,7 +108,8 @@ _createAndRedirectToMain body = do
 _storeAndRedirect :: String -> IO (Either (ApiGatewayResponse String) (ApiGatewayResponse String))
 _storeAndRedirect url = do
     conf <- Conf.getConf
-    redirectUrlWithUriParam <- (++) <$> (pure "/?uri=") <*> (allocateURL conf url)
+    let urlWithProtocol = if Data.List.isPrefixOf "http://" url || Data.List.isPrefixOf "https://" url then url else "https://" ++ url
+    redirectUrlWithUriParam <- (++) <$> (pure "/?uri=") <*> (allocateURL conf urlWithProtocol)
     return $ Right $ ApiGatewayResponse {
             apiGatewayResponseStatusCode = 301,
             apiGatewayResponseIsBase64Encoded = False,
