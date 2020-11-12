@@ -17,6 +17,7 @@ import Data.Text
 import Debug.Trace
 import Control.Monad.Loops (firstM)
 import System.IO.Error
+import Configuration
 
 
 _s2av :: String -> AttributeValue

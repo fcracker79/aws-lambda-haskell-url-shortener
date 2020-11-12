@@ -18,35 +18,15 @@ import Recaptcha
 import Control.Monad.IO.Class
 import qualified Data.Text as Text
 import System.IO.Error
-
-
-_getConf :: IO DynamoDBConfiguration
-_getConf = do
-    regionString <- Sysenv.getEnv "AWS_REGION"
-    tableName <- Sysenv.getEnv "URLS_TABLE_NAME"
-    print $ "Region " ++ regionString
-    case (fromText (Text.pack regionString)::(Either String Region)) of
-        Right region -> return (DynamoDBConfiguration {
-                region=region,
-                endpoint=Nothing,
-                table=DynamoDBTable {
-                    tablename=tableName,
-                    keyField=Data.Text.pack "id",
-                    valueField=Data.Text.pack "url"
-                }
-                })
-        Left _ -> ioError (userError $ "Invalid region" ++ regionString)
-
--- TODO migrate to SSM or secrets-manager (beware, currently not available in all regions)
-_getRecaptchaKey :: IO String
-_getRecaptchaKey = Sysenv.getEnv "RECAPTCHA_KEY"
+import qualified Configuration as Conf
+import RecaptchaSecret
 
 
 redirectUrl :: (ApiGatewayRequest String) -> Context () -> IO (Either (ApiGatewayResponse String) (ApiGatewayResponse String))
 redirectUrl request context = do
     (liftIO . print) "Executing URL redirection"
     (liftIO . print) request
-    conf <- _getConf
+    conf <- Conf.getConf
     let shortenerId = Prelude.head $ Prelude.filter
             (\x -> Data.Text.length x > 0)
             $ Data.Text.splitOn (Data.Text.pack "/") $ apiGatewayRequestPath request
@@ -74,7 +54,7 @@ createUrl :: (ApiGatewayRequest String) -> Context () -> IO (Either (ApiGatewayR
 createUrl request context = do
     (liftIO . print) "Executing URL creation"
     (liftIO . print) request
-    conf <- _getConf
+    conf <- Conf.getConf
     let maybeBody = apiGatewayRequestBody request
     case maybeBody of
         Just body -> _createAndRedirectToMain body
@@ -111,7 +91,8 @@ _createAndRedirectToMain body = do
                                     ]
         }
         Right (SubmitUrlForm urlToStore recaptchaTokenValue) -> do
-            recaptchaKey <- _getRecaptchaKey
+            conf <- Conf.getConf
+            recaptchaKey <- getRecaptchaKey conf
             tokenVerified <- verifyCaptcha recaptchaKey $ recaptchaTokenValue
             if tokenVerified then _storeAndRedirect urlToStore
                              else return $ Right $ ApiGatewayResponse {
@@ -125,7 +106,7 @@ _createAndRedirectToMain body = do
 
 _storeAndRedirect :: String -> IO (Either (ApiGatewayResponse String) (ApiGatewayResponse String))
 _storeAndRedirect url = do
-    conf <- _getConf
+    conf <- Conf.getConf
     redirectUrlWithUriParam <- (++) <$> (pure "/?uri=") <*> (allocateURL conf url)
     return $ Right $ ApiGatewayResponse {
             apiGatewayResponseStatusCode = 301,

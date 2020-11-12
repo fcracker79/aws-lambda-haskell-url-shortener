@@ -15,6 +15,7 @@ dependencies:
 - aws-lambda-haskell-runtime
 - amazonka
 - amazonka-dynamodb
+- amazonka-ssm
 - aeson
 - bytestring
 - lens

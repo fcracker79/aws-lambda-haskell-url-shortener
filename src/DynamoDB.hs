@@ -1,10 +1,7 @@
 module DynamoDB
     ( insertItem
     , fetchItem
-    , DynamoDBEndpoint (..)
-    , DynamoDBTable (..)
-    , DynamoDBConfiguration (..)
-    , DynamoDBItem (..)) where
+    ) where
 
 
 import           Control.Lens
@@ -25,27 +22,7 @@ import           Network.AWS.Data
 import           Network.AWS.DynamoDB
 import           System.IO
 import           Debug.Trace
-
-data DynamoDBEndpoint = DynamoDBEndpoint {
-    secure :: Bool,
-    host :: ByteString,
-    port :: Int
-} deriving(Show)
-
-data DynamoDBTable = DynamoDBTable {
-    tablename :: String,
-    keyField :: Text,
-    valueField :: Text
-} deriving(Show)
-
-data DynamoDBConfiguration = DynamoDBConfiguration {
-    region :: Region,
-    endpoint :: Maybe DynamoDBEndpoint,
-    table :: DynamoDBTable
-} deriving(Show)
-
-type DynamoDBItem = HashMap Text AttributeValue
-
+import Configuration
 
 _createService :: Maybe DynamoDBEndpoint -> Service
 _createService Nothing = dynamoDB

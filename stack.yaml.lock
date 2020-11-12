@@ -26,6 +26,13 @@ packages:
   original:
     hackage: amazonka-dynamodb-1.6.1
 - completed:
+    hackage: amazonka-ssm-1.6.1@sha256:9b1c4673dd4a8f713291fb325c2179daab7cc94a962c8e1fab6968bd572c8148,7854
+    pantry-tree:
+      size: 25252
+      sha256: 14a7382ed189d03aaf35adecece88dfaf6c78829c4fbd16f3db7e0df9f7cb39d
+  original:
+    hackage: amazonka-ssm-1.6.1
+- completed:
     hackage: monad-loops-0.4.3@sha256:ada4f1295ece07f9a7398bc5b40c4532f95a733a8604d2a2f57f05f878766df2,1751
     pantry-tree:
       size: 243
