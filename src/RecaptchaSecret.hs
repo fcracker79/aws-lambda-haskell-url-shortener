@@ -16,7 +16,7 @@ getRecaptchaKey conf = do
     env <- newEnv Discover <&> set envLogger lgr
     recaptchaSecretKey <- Text.pack <$> (Sysenv.getEnv "RECAPTCHA_SSM_PARAMETER_NAME")
     response <- runResourceT . runAWST env . Control.Monad.Trans.AWS.within (region conf) $ do
-        Control.Monad.Trans.AWS.send $ getParameter recaptchaSecretKey
+        Control.Monad.Trans.AWS.send $ getParameter recaptchaSecretKey & gWithDecryption  .~ Just True
 
     let maybeParam = response ^. gprsParameter
     case maybeParam of
